@@ -129,7 +129,7 @@ var MovieCollection = React.createClass({
     return (
         <div>
           <button className="btn btn-default" onClick={this.renderMovieForm}>Add Movie</button>
-          <table>
+          <table className="table table-bordered table-striped">
             <thead>
               <th>Title</th>
               <th>Genre</th>
