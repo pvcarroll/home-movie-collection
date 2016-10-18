@@ -13,23 +13,23 @@ var MovieForm = React.createClass({
 
     if (clickOffsetXinTarget < 41) {
       e.target.className = "oneStar";
-      this.setState({state: 1});
+      this.setState({rating: 1});
     }
     else if (clickOffsetXinTarget < 80) {
       e.target.className = "twoStars";
-      this.setState({state: 2});
+      this.setState({rating: 2});
     }
     else if (clickOffsetXinTarget < 120) {
       e.target.className = "threeStars";
-      this.setState({state: 3});
+      this.setState({rating: 3});
     }
     else if (clickOffsetXinTarget < 160) {
       e.target.className = "fourStars";
-      this.setState({state: 4});
+      this.setState({rating: 4});
     }
     else if (clickOffsetXinTarget < 200) {
       e.target.className = "fiveStars";
-      this.setState({state: 5});
+      this.setState({rating: 5});
     }
   },
 
@@ -100,6 +100,21 @@ var MovieForm = React.createClass({
   }
 });
 
+var Movie = React.createClass({
+  render: function() {
+    var movie = JSON.parse(localStorage[this.props.title]);
+    return (
+        <tr>
+          <td>{this.props.title}</td>
+          <td>{movie.genre}</td>
+          <td>{movie.actors}</td>
+          <td>{movie.year}</td>
+          <td>{movie.rating}</td>
+        </tr>
+    );
+  }
+});
+
 var MovieCollection = React.createClass({
   renderMovieForm: function() {
     ReactDOM.render(
@@ -109,10 +124,25 @@ var MovieCollection = React.createClass({
   },
 
   render: function() {
+    var movieCollection = localStorage,
+        movies = Object.keys(movieCollection);
     return (
         <div>
           <button className="btn btn-default" onClick={this.renderMovieForm}>Add Movie</button>
-          <div>MovieCollection</div>
+          <table>
+            <thead>
+              <th>Title</th>
+              <th>Genre</th>
+              <th>Actors</th>
+              <th>Year</th>
+              <th>Rating</th>
+            </thead>
+            <tbody>
+              {movies.map(function(movie) {
+                return <Movie title={movie}/>;
+              })}
+            </tbody>
+          </table>
         </div>
     );
   }
