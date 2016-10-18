@@ -1,4 +1,13 @@
+const CONTAINER = "container";
+
 var MovieForm = React.createClass({
+  renderMovieCollection: function() {
+    ReactDOM.render(
+        <MovieCollection/>,
+        document.getElementById(CONTAINER)
+    );
+  },
+
   starsClicked: function(e) {
     var clickOffsetXinTarget = e.clientX - e.target.offsetLeft;
 
@@ -44,47 +53,65 @@ var MovieForm = React.createClass({
     e.preventDefault();
     localStorage.setItem(this.state.title, JSON.stringify(this.state));
     console.log(this.state);
+    ReactDOM.render(
+        <MovieCollection />,
+        document.getElementById(CONTAINER)
+    );
   },
 
   render: function() {
     return (
-        <form className="addMovieForm" onSubmit={this.onSubmit}>
-          <div className="form-group">
-            <label for="titleInput">Title</label>
-            <input type="text" className="form-control" id="titleInput"
-                   onChange={this.handleTitleChange} />
-          </div>
-          <div className="form-group">
-            <label for="genreInput">Genre</label>
-            <input type="text" className="form-control" id="genreInput"
-                   onChange={this.handleGenreChange}/>
-          </div>
-          <div className="form-group">
-            <label for="actorsInput">Actors</label>
-            <input type="text" className="form-control" id="actorsInput"
-                   onChange={this.handleActorsChange}/>
-          </div>
-          <div className="form-group">
-            <label for="yearInput">Year</label>
-            <input type="text" className="form-control" id="yearInput"
-                   onChange={this.handleYearChange}/>
-          </div>
-          <div className="form-group">
-            <label for="ratingInput">Rating</label>
-            <div id="ratingStars" onClick={this.starsClicked}></div>
-            <input type="hidden" id="ratingInput" className="form-control"
-                   onChange={this.handleRatingChange}/>
-          </div>
-          <input type="submit" value="Add Movie" className="btn btn-default" />
-        </form>
+        <div>
+          <button className="btn btn-default"
+                  onClick={this.renderMovieCollection}>
+            Show Movie Collection
+          </button>
+          <form className="addMovieForm" onSubmit={this.onSubmit}>
+            <div className="form-group">
+              <label for="titleInput">Title</label>
+              <input type="text" className="form-control" id="titleInput"
+                     onChange={this.handleTitleChange} />
+            </div>
+            <div className="form-group">
+              <label for="genreInput">Genre</label>
+              <input type="text" className="form-control" id="genreInput"
+                     onChange={this.handleGenreChange}/>
+            </div>
+            <div className="form-group">
+              <label for="actorsInput">Actors</label>
+              <input type="text" className="form-control" id="actorsInput"
+                     onChange={this.handleActorsChange}/>
+            </div>
+            <div className="form-group">
+              <label for="yearInput">Year</label>
+              <input type="text" className="form-control" id="yearInput"
+                     onChange={this.handleYearChange}/>
+            </div>
+            <div className="form-group">
+              <label for="ratingInput">Rating</label>
+              <div id="ratingStars" onClick={this.starsClicked}></div>
+              <input type="hidden" id="ratingInput" className="form-control"
+                     onChange={this.handleRatingChange}/>
+            </div>
+            <input type="submit" value="Add Movie" className="btn btn-default" />
+          </form>
+        </div>
     );
   }
 });
 
 var MovieCollection = React.createClass({
+  renderMovieForm: function() {
+    ReactDOM.render(
+        <MovieForm/>,
+        document.getElementById(CONTAINER)
+    );
+  },
+
   render: function() {
     return (
         <div>
+          <button className="btn btn-default" onClick={this.renderMovieForm}>Add Movie</button>
           <div>MovieCollection</div>
         </div>
     );
@@ -92,6 +119,6 @@ var MovieCollection = React.createClass({
 });
 
 ReactDOM.render(
-  <MovieForm />,
-  document.getElementById("container")
+  <MovieCollection/>,
+  document.getElementById(CONTAINER)
 );
