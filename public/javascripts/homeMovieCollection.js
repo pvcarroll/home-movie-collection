@@ -256,7 +256,8 @@ var MovieCollection = React.createClass({
               />
               {
                 movies.map(function(movie) {
-                  return <Movie title={movie}
+                  return <Movie key={movie}
+                                title={movie}
                                 titleFilter={titleFilter}
                                 genreFilter={genreFilter}
                                 actorsFilter={actorsFilter}
