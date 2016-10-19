@@ -100,9 +100,59 @@ var MovieForm = React.createClass({
   }
 });
 
+var SearchRow = React.createClass({
+
+  handleTitleFilterChange: function() {
+    this.props.onTitleFilterInput(
+      this.refs.titleFilterInput.value
+    );
+  },
+
+  render: function() {
+    return (
+        <tr>
+          <td>
+            <input type="text"
+                   className="searchField"
+                   placeholder="Search title"
+                   value={this.props.titleFilter}
+                   ref="titleFilterInput"
+                   onChange={this.handleTitleFilterChange} />
+          </td>
+          <td>
+            <input type="text"
+                   className="searchField"
+                   placeholder="Search genre" />
+          </td>
+          <td>
+            <input type="text"
+                   className="searchField"
+                   placeholder="Search actors" />
+          </td>
+          <td>
+            <input type="text"
+                   className="searchField"
+                   placeholder="Search year" />
+          </td>
+          <td>
+            <input type="text"
+                   className="searchField"
+                   placeholder="Search rating" />
+          </td>
+        </tr>
+    );
+  }
+});
+
 var Movie = React.createClass({
   render: function() {
-    var movie = JSON.parse(localStorage[this.props.title]);
+    var movie = JSON.parse(localStorage[this.props.title]),
+        titleFilter = this.props.titleFilter;
+    console.log("Movie: titleFilter = " + titleFilter);
+    // Filter movies by search input.
+    if (movie.title.indexOf(titleFilter) === -1) {
+      return null;
+    }
     return (
         <tr>
           <td>{this.props.title}</td>
@@ -110,30 +160,6 @@ var Movie = React.createClass({
           <td>{movie.actors}</td>
           <td>{movie.year}</td>
           <td>{movie.rating}</td>
-        </tr>
-    );
-  }
-});
-
-var SearchRow = React.createClass({
-  render: function() {
-    return (
-        <tr>
-          <td>
-            <input type="text" className="searchField" placeholder="Search title" />
-          </td>
-          <td>
-            <input type="text" className="searchField" placeholder="Search genre" />
-          </td>
-          <td>
-            <input type="text" className="searchField" placeholder="Search actors" />
-          </td>
-          <td>
-            <input type="text" className="searchField" placeholder="Search year" />
-          </td>
-          <td>
-            <input type="text" className="searchField" placeholder="Search rating" />
-          </td>
         </tr>
     );
   }
@@ -147,9 +173,14 @@ var MovieCollection = React.createClass({
     );
   },
 
+  handleTitleFilterInput: function(titleFilter) {
+    this.setState({titleFilter: titleFilter});
+  },
+
   render: function() {
     var movieCollection = localStorage,
-        movies = Object.keys(movieCollection);
+        movies = Object.keys(movieCollection),
+        titleFilter = (this.state && this.state.titleFilter) ? this.state.titleFilter : "";
     return (
         <div>
           <button className="btn btn-default" onClick={this.renderMovieForm}>Add Movie</button>
@@ -162,10 +193,12 @@ var MovieCollection = React.createClass({
                 <th>Year</th>
                 <th>Rating</th>
               </tr>
-              <SearchRow/>
-              {movies.map(function(movie) {
-                return <Movie title={movie}/>;
-              })}
+              <SearchRow onTitleFilterInput={this.handleTitleFilterInput}/>
+              {
+                movies.map(function(movie) {
+                  return <Movie title={movie} titleFilter={titleFilter}/>;
+                })
+              }
             </tbody>
           </table>
         </div>
