@@ -115,6 +115,30 @@ var Movie = React.createClass({
   }
 });
 
+var SearchRow = React.createClass({
+  render: function() {
+    return (
+        <tr>
+          <td>
+            <input type="text" className="searchField" placeholder="Search title" />
+          </td>
+          <td>
+            <input type="text" className="searchField" placeholder="Search genre" />
+          </td>
+          <td>
+            <input type="text" className="searchField" placeholder="Search actors" />
+          </td>
+          <td>
+            <input type="text" className="searchField" placeholder="Search year" />
+          </td>
+          <td>
+            <input type="text" className="searchField" placeholder="Search rating" />
+          </td>
+        </tr>
+    );
+  }
+});
+
 var MovieCollection = React.createClass({
   renderMovieForm: function() {
     ReactDOM.render(
@@ -130,14 +154,15 @@ var MovieCollection = React.createClass({
         <div>
           <button className="btn btn-default" onClick={this.renderMovieForm}>Add Movie</button>
           <table className="table table-bordered table-striped">
-            <thead>
-              <th>Title</th>
-              <th>Genre</th>
-              <th>Actors</th>
-              <th>Year</th>
-              <th>Rating</th>
-            </thead>
             <tbody>
+              <tr>
+                <th>Title</th>
+                <th>Genre</th>
+                <th>Actors</th>
+                <th>Year</th>
+                <th>Rating</th>
+              </tr>
+              <SearchRow/>
               {movies.map(function(movie) {
                 return <Movie title={movie}/>;
               })}
