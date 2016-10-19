@@ -192,7 +192,7 @@ var Movie = React.createClass({
       return null;
     }
     return (
-        <tr>
+        <tr className="movieRow">
           <td>{this.props.title}</td>
           <td>{movie.genre}</td>
           <td>{movie.actors}</td>
@@ -262,8 +262,7 @@ var MovieCollection = React.createClass({
                                 genreFilter={genreFilter}
                                 actorsFilter={actorsFilter}
                                 yearFilter={yearFilter}
-                                ratingFilter={ratingFilter}
-                  />;
+                                ratingFilter={ratingFilter} />;
                 })
               }
             </tbody>
