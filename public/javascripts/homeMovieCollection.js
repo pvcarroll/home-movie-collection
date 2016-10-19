@@ -67,27 +67,27 @@ var MovieForm = React.createClass({
           </button>
           <form className="addMovieForm" onSubmit={this.onSubmit}>
             <div className="form-group">
-              <label for="titleInput">Title</label>
+              <label htmlFor="titleInput">Title</label>
               <input type="text" className="form-control" id="titleInput"
-                     onChange={this.handleTitleChange} />
+                     onChange={this.handleTitleChange} required />
             </div>
             <div className="form-group">
-              <label for="genreInput">Genre</label>
+              <label htmlFor="genreInput">Genre</label>
               <input type="text" className="form-control" id="genreInput"
                      onChange={this.handleGenreChange}/>
             </div>
             <div className="form-group">
-              <label for="actorsInput">Actors</label>
+              <label htmlFor="actorsInput">Actors</label>
               <input type="text" className="form-control" id="actorsInput"
                      onChange={this.handleActorsChange}/>
             </div>
             <div className="form-group">
-              <label for="yearInput">Year</label>
+              <label htmlFor="yearInput">Year</label>
               <input type="text" className="form-control" id="yearInput"
                      onChange={this.handleYearChange}/>
             </div>
             <div className="form-group">
-              <label for="ratingInput">Rating</label>
+              <label htmlFor="ratingInput">Rating</label>
               <div id="ratingStars" onClick={this.starsClicked}></div>
               <input type="hidden" id="ratingInput" className="form-control"
                      onChange={this.handleRatingChange}/>
