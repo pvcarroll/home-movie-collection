@@ -62,6 +62,9 @@ var MovieForm = React.createClass({
 
   onSubmit: function(e) {
     e.preventDefault();
+    if (localStorage[this.props.title]) {
+      delete localStorage[this.props.title];
+    }
     localStorage.setItem(this.state.title, JSON.stringify(this.state));
     this.renderMovieCollection();
   },
