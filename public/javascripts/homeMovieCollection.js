@@ -63,13 +63,21 @@ var MovieForm = React.createClass({
   onSubmit: function(e) {
     e.preventDefault();
     localStorage.setItem(this.state.title, JSON.stringify(this.state));
-    ReactDOM.render(
-        <MovieCollection />,
-        document.getElementById(CONTAINER)
-    );
+    this.renderMovieCollection();
+  },
+
+  deleteMovie: function () {
+    delete localStorage[this.props.title];
+    this.renderMovieCollection();
   },
 
   render: function() {
+    var submitButtonText = (this.props.update) ? "Update Movie" : "Add Movie";
+    var deleteButton = null;
+    if (this.props.update) {
+      deleteButton = <button className="btn btn-danger deleteMovieButton"
+                             onClick={this.deleteMovie}>Delete Movie</button>
+    }
     return (
         <div>
           <button className="btn btn-default"
@@ -118,7 +126,8 @@ var MovieForm = React.createClass({
                      defaultValue={this.props.rating}
                      onChange={this.handleRatingChange}/>
             </div>
-            <input type="submit" value="Add Movie" className="btn btn-default" />
+            <input type="submit" value={submitButtonText} className="btn btn-primary submitMovieButton" />
+            {deleteButton}
           </form>
         </div>
     );
