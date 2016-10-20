@@ -281,7 +281,7 @@ var MovieCollection = React.createClass({
 
   render: function() {
     var movieCollection = localStorage,
-        movies = Object.keys(movieCollection),
+        movies = Object.keys(movieCollection).sort(),
         titleFilter = (this.state && this.state.titleFilter) ? this.state.titleFilter : "",
         genreFilter = (this.state && this.state.genreFilter) ? this.state.genreFilter : "",
         actorsFilter = (this.state && this.state.actorsFilter) ? this.state.actorsFilter : "",
