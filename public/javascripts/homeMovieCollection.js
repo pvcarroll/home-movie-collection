@@ -1,6 +1,17 @@
 const CONTAINER = "container";
 
 var MovieForm = React.createClass({
+
+  componentWillMount: function() {
+    if (this.props.update) {
+      this.setState({title: this.props.title});
+      this.setState({genre: this.props.genre});
+      this.setState({actors: this.props.actors});
+      this.setState({year: this.props.year});
+      this.setState({rating: this.props.rating});
+    }
+  },
+
   renderMovieCollection: function() {
     ReactDOM.render(
         <MovieCollection/>,
@@ -68,28 +79,43 @@ var MovieForm = React.createClass({
           <form className="addMovieForm" onSubmit={this.onSubmit}>
             <div className="form-group">
               <label htmlFor="titleInput">Title</label>
-              <input type="text" className="form-control" id="titleInput"
+              <input type="text"
+                     id="titleInput"
+                     className="form-control"
+                     defaultValue={this.props.title}
                      onChange={this.handleTitleChange} required />
             </div>
             <div className="form-group">
               <label htmlFor="genreInput">Genre</label>
-              <input type="text" className="form-control" id="genreInput"
+              <input type="text"
+                     id="genreInput"
+                     className="form-control"
+                     defaultValue={this.props.genre}
                      onChange={this.handleGenreChange}/>
             </div>
             <div className="form-group">
               <label htmlFor="actorsInput">Actors</label>
-              <input type="text" className="form-control" id="actorsInput"
+              <input type="text"
+                     id="actorsInput"
+                     className="form-control"
+                     defaultValue={this.props.actors}
                      onChange={this.handleActorsChange}/>
             </div>
             <div className="form-group">
               <label htmlFor="yearInput">Year</label>
-              <input type="text" className="form-control" id="yearInput"
+              <input type="text"
+                     id="yearInput"
+                     className="form-control"
+                     defaultValue={this.props.year}
                      onChange={this.handleYearChange}/>
             </div>
             <div className="form-group">
               <label htmlFor="ratingInput">Rating</label>
               <div id="ratingStars" onClick={this.starsClicked}></div>
-              <input type="hidden" id="ratingInput" className="form-control"
+              <input type="hidden"
+                     id="ratingInput"
+                     className="form-control"
+                     defaultValue={this.props.rating}
                      onChange={this.handleRatingChange}/>
             </div>
             <input type="submit" value="Add Movie" className="btn btn-default" />
@@ -176,6 +202,19 @@ var SearchRow = React.createClass({
 });
 
 var Movie = React.createClass({
+
+  editMovieForm: function(title, genre, actors, year, rating) {
+    ReactDOM.render(
+        <MovieForm title={title}
+                   genre={genre}
+                   actors={actors}
+                   year={year}
+                   rating={rating}
+                   update />,
+        document.getElementById(CONTAINER)
+    );
+  },
+
   render: function() {
     var movie = JSON.parse(localStorage[this.props.title]),
         titleFilter = this.props.titleFilter,
@@ -192,7 +231,8 @@ var Movie = React.createClass({
       return null;
     }
     return (
-        <tr className="movieRow">
+        <tr className="movieRow"
+            onClick={() => this.editMovieForm(movie.title, movie.genre, movie.actors, movie.year, movie.rating)}>
           <td>{this.props.title}</td>
           <td>{movie.genre}</td>
           <td>{movie.actors}</td>
